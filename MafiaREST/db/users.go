@@ -13,6 +13,14 @@ func (dh *mongoDbHandle) AddUser(user *schemes.User) (*mongo.InsertOneResult, er
 	defer cancel()
 
 	res, err := dh.users.InsertOne(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = dh.stats.InsertOne(ctx, &schemes.UserStats{
+		UID: res.InsertedID.(primitive.ObjectID),
+	})
+
 	return res, err
 }
 

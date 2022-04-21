@@ -6,4 +6,6 @@ const (
 )
 
 type SessionReport struct {
+	Outcome  uint8  `json:"outcome" binding:"required"`
+	Duration uint64 `json:"duration" binding:"required"`
 }

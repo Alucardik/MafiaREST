@@ -1,7 +1,6 @@
 package endpoints
 
 import (
-	"MafiaREST/db"
 	"MafiaREST/schemes"
 	"MafiaREST/utils"
 	"github.com/gin-gonic/gin"
@@ -10,20 +9,6 @@ import (
 	"log"
 	"net/http"
 )
-
-var handle db.MongoDbHandle = nil
-
-func verifyHandle(ctx *gin.Context) bool {
-	if handle == nil {
-		ctx.JSON(http.StatusInternalServerError, fillInError(_INTERNAL_ERR))
-	}
-
-	return handle != nil
-}
-
-func SetupDbHandle(dbHandle db.MongoDbHandle) {
-	handle = dbHandle
-}
 
 func AddUser(ctx *gin.Context) {
 	if !verifyHandle(ctx) {
@@ -132,6 +117,14 @@ func DeleteUser(ctx *gin.Context) {
 	utils.NotifyOnError("", err)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, _GET_USER_ERR)
+		return
+	}
+
+	// deleting user deletes associated stats
+	err = handle.DeleteUserStatsByUID(uid)
+	utils.NotifyOnError("", err)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, _MISSING_STATS)
 		return
 	}
 

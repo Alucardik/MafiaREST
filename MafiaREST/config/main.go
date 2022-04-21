@@ -13,4 +13,5 @@ const (
 
 const (
 	USERS_ENDPOINT = "/users"
+	STATS_ENDPOINT = "/stats"
 )

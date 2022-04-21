@@ -26,10 +26,10 @@ const (
 )
 
 type User struct {
-	Name   string `json:"name" bson:"name"`
-	Avatar string `json:"avatar" bson:"avatar"`
-	Sex    sex    `json:"sex" bson:"sex"`
-	Email  string `json:"email" bson:"email"`
+	Name   string `json:"name" bson:"name" binding:"required"`
+	Avatar string `json:"avatar" bson:"avatar" binding:"required"`
+	Sex    sex    `json:"sex" bson:"sex" binding:"required"`
+	Email  string `json:"email" bson:"email" binding:"required"`
 }
 
 // TODO: maybe replace bool with err and add custom errors

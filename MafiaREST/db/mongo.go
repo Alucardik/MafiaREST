@@ -18,6 +18,9 @@ type MongoDbHandle interface {
 	GetAllUsers() (*[]schemes.User, error)
 	UpdateUserById(id primitive.ObjectID, updated *schemes.User) error
 	DeleteUserById(id primitive.ObjectID) error
+
+	UpdateUserStats(uid primitive.ObjectID, update *schemes.SessionReport) error
+	DeleteUserStatsByUID(uid primitive.ObjectID) error
 }
 
 type mongoDbHandle struct {

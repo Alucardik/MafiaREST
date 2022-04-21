@@ -8,7 +8,9 @@ const (
 	_GET_USER_ERR      = "Couldn't find user with the specified ID"
 	_INVALID_USER_INFO = "Wrong scheme format"
 	_INVALID_UID       = "Invalid user id"
+	_INVALID_REPORT    = "Invalid session report scheme"
 	_ADD_USR_ERR       = "Couldn't add user to the database"
+	_MISSING_STATS     = "Couldn't find associated stats"
 )
 
 type errorMsg struct {

@@ -20,6 +20,8 @@ func RunRESTServer(handle db.MongoDbHandle) {
 	router.PUT(config.USERS_ENDPOINT+"/:id", endpoints.UpdateUser)
 	router.DELETE(config.USERS_ENDPOINT+"/:id", endpoints.DeleteUser)
 
+	router.PUT(config.STATS_ENDPOINT+"/:uid", endpoints.UpdateStats)
+
 	err := router.Run(fmt.Sprintf("%s:%d", config.REST_HOST, config.REST_PORT))
 	utils.PanicOnError("", err)
 }
