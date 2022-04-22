@@ -9,5 +9,6 @@ type UserStats struct {
 	SessionCount uint64             `json:"session_count" bson:"session_count" binding:"required"`
 	Wins         uint64             `json:"wins" bson:"wins" binding:"required"`
 	Losses       uint64             `json:"losses" bson:"losses" binding:"required"`
-	TotalTime    uint64             `json:"total_time" bson:"total_time" binding:"required"`
+	// supposed to be seconds
+	TotalTime uint64 `json:"total_time" bson:"total_time" binding:"required"`
 }

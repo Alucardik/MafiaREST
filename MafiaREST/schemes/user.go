@@ -9,7 +9,7 @@ import (
 
 type sex uint8
 
-func (s sex) toString() string {
+func (s sex) ToString() string {
 	switch s {
 	case SEX_MALE:
 		return "male"

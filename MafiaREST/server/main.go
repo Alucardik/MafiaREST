@@ -17,10 +17,14 @@ func RunRESTServer(handle db.MongoDbHandle) {
 	router.POST(config.USERS_ENDPOINT, endpoints.AddUser)
 	router.GET(config.USERS_ENDPOINT+"/:id", endpoints.GetUser)
 	router.GET(config.USERS_ENDPOINT, endpoints.GetUsers)
-	router.PUT(config.USERS_ENDPOINT+"/:id", endpoints.UpdateUser)
+	router.PATCH(config.USERS_ENDPOINT+"/:id", endpoints.UpdateUser)
 	router.DELETE(config.USERS_ENDPOINT+"/:id", endpoints.DeleteUser)
 
 	router.PUT(config.STATS_ENDPOINT+"/:uid", endpoints.UpdateStats)
+	// TODO: publish task for the worker
+	router.GET(config.STATS_ENDPOINT+"/:uid", endpoints.)
+	// TODO: donwload pdf afer worker is finished
+	router.GET(config.STATS_ENDPOINT + "/report/:uid", endpoints.)
 
 	err := router.Run(fmt.Sprintf("%s:%d", config.REST_HOST, config.REST_PORT))
 	utils.PanicOnError("", err)
