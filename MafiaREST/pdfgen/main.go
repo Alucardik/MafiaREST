@@ -26,7 +26,7 @@ func GenReport(user *schemes.User, stats *schemes.UserStats) (string, error) {
 	tableKeyValue(pdf, "Name", user.Name, true, false)
 	tableKeyValue(pdf, "Sex", user.Sex.ToString(), true, false)
 	// TODO: try to upload avatar locally and insert into pdf
-	tableKeyValue(pdf, "Avatar url", user.Avatar, true, true)
+	//tableKeyValue(pdf, "Avatar url", user.Avatar, true, true)
 	tableKeyValue(pdf, "E-mail", user.Email, true, false)
 	pdf.Ln(5)
 
@@ -37,6 +37,11 @@ func GenReport(user *schemes.User, stats *schemes.UserStats) (string, error) {
 	tableKeyValue(pdf, "Losses", strconv.FormatUint(stats.Losses, 10), false, false)
 	tableKeyValue(pdf, "Loss Rate", strconv.FormatFloat(float64(stats.Losses)/float64(stats.SessionCount)*100, 'f', 2, 64)+"%", true, false)
 	tableKeyValue(pdf, "Overall time", strconv.FormatUint(stats.TotalTime/60, 10)+" mins", true, false)
+
+	if !displayAvatar(pdf, user.Avatar, stats.UID.String()) {
+		pdf.SetFontSize(10)
+		pdf.Text(136, 60, "Couldn't load the avatar")
+	}
 
 	filePath := config.TMP_FILE_PATH + "/" + docName + ".pdf"
 	err := pdf.OutputFileAndClose(filePath)
