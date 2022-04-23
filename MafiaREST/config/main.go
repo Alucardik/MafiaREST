@@ -8,6 +8,7 @@ const (
 const (
 	USERS_ENDPOINT = "/users"
 	STATS_ENDPOINT = "/stats"
+	UTILS_ENDPOINT = "/utils"
 )
 
 // TODO: add getenv as well

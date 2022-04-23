@@ -33,8 +33,8 @@ func (dh *mongoDbHandle) GetUserById(id primitive.ObjectID) (*schemes.User, erro
 	return &res, err
 }
 
-func (dh *mongoDbHandle) GetAllUsers() (*[]schemes.User, error) {
-	var res []schemes.User
+func (dh *mongoDbHandle) GetAllUsers() (*[]schemes.UserWithId, error) {
+	var res []schemes.UserWithId
 	ctx, cancel := context.WithTimeout(context.Background(), _REQUEST_TM)
 	defer cancel()
 

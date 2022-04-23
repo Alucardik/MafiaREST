@@ -2,6 +2,7 @@ package schemes
 
 import (
 	"MafiaREST/utils"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"
 	"net/mail"
 	"net/url"
@@ -32,7 +33,16 @@ type User struct {
 	Email  string `json:"email" bson:"email" binding:"required"`
 }
 
+type UserWithId struct {
+	ID     primitive.ObjectID `json:"id" bson:"_id"`
+	Name   string             `json:"name" bson:"name" binding:"required"`
+	Avatar string             `json:"avatar" bson:"avatar" binding:"required"`
+	Sex    sex                `json:"sex" bson:"sex" binding:"required"`
+	Email  string             `json:"email" bson:"email" binding:"required"`
+}
+
 // TODO: maybe replace bool with err and add custom errors
+
 func (u *User) Validate() bool {
 	parsedMail, err := mail.ParseAddress(u.Email)
 	utils.NotifyOnError("", err)

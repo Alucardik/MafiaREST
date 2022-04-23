@@ -15,7 +15,7 @@ type MongoDbHandle interface {
 
 	AddUser(user *schemes.User) (*mongo.InsertOneResult, error)
 	GetUserById(id primitive.ObjectID) (*schemes.User, error)
-	GetAllUsers() (*[]schemes.User, error)
+	GetAllUsers() (*[]schemes.UserWithId, error)
 	UpdateUserById(id primitive.ObjectID, updated *schemes.User) error
 	DeleteUserById(id primitive.ObjectID) error
 

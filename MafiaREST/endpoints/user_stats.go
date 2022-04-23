@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"log"
 	"net/http"
 )
 
@@ -90,14 +89,13 @@ func (m *Manager) GetStats(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, fillInMsg(_INTERNAL_ERR))
 	}
 
-	log.Println("IN GET REPORT", uid, meta, err)
+	filePath := config.TMP_FILE_PATH + "/" + uid.String()[10:34] + "_report.pdf"
 	switch meta.Status {
 	case schemes.REPORT_FAILED:
 		ctx.JSON(http.StatusOK, fillInMsg(_FAILED_REPORT))
 	case schemes.REPORT_NOT_FOUND:
 		ctx.JSON(http.StatusNotFound, fillInMsg(_MISSING_REPORT))
 	case schemes.REPORT_READY:
-		log.Println("Sending pdf")
-		ctx.FileAttachment(meta.Path, "MafiaPlayerReport.pdf")
+		ctx.FileAttachment(filePath, "MafiaPlayerReport.pdf")
 	}
 }

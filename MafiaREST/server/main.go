@@ -26,6 +26,8 @@ func RunRESTServer(handle db.MongoDbHandle, queue msgbroker.TaskQueue) {
 	router.GET(config.STATS_ENDPOINT+"/report/:uid", manager.GetStats)
 	router.GET(config.STATS_ENDPOINT+"/:uid", manager.RequestStats)
 
+	router.POST(config.UTILS_ENDPOINT+"/:uid", manager.SaveReport)
+
 	err := router.Run(fmt.Sprintf("%s:%d", config.REST_HOST, config.REST_PORT))
 	utils.PanicOnError("", err)
 }

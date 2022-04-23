@@ -13,5 +13,4 @@ const (
 type ReportMeta struct {
 	UID    primitive.ObjectID `bson:"uid"`
 	Status ReportStatus       `bson:"status"`
-	Path   string             `bson:"path"`
 }
