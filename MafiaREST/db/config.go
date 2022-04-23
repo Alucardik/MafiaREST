@@ -3,5 +3,6 @@ package db
 import "time"
 
 const (
-	_REQUEST_TM = time.Second * 3
+	_CONNECTION_TM = time.Second * 15
+	_REQUEST_TM    = time.Second * 3
 )

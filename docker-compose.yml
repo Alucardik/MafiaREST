@@ -1,0 +1,45 @@
+version: "3.1"
+
+services:
+  queue_broker:
+    image: rabbitmq:3.9-management
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  mongo:
+    image: mongo
+    hostname: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+
+  server:
+    build:
+      context: .
+    depends_on:
+      - mongo
+      - queue_broker
+    environment:
+      MafiaREST_MODE: server
+      QUEUE_HOST: rabbitmq
+      DB_HOST: mongodb
+      REST_PORT: 8080
+      REST_HOST: 0.0.0.0
+    ports:
+      - "8080:8080"
+
+  worker:
+    build:
+      context: .
+    depends_on:
+      - mongo
+      - queue_broker
+    environment:
+      MafiaREST_MODE: worker
+      QUEUE_HOST: rabbitmq
+      DB_HOST: mongodb

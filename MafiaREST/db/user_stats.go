@@ -46,3 +46,26 @@ func (dh *mongoDbHandle) DeleteUserStatsByUID(uid primitive.ObjectID) error {
 	_, err := dh.stats.DeleteOne(ctx, bson.D{{"uid", uid}})
 	return err
 }
+
+func (dh *mongoDbHandle) GetStatsByUID(uid primitive.ObjectID) (*schemes.UserStats, error) {
+	res := schemes.UserStats{}
+	ctx, cancel := context.WithTimeout(context.Background(), _REQUEST_TM)
+	defer cancel()
+
+	err := dh.stats.FindOne(ctx, bson.D{{"uid", uid}}).Decode(&res)
+	return &res, err
+}
+
+func (dh *mongoDbHandle) GetAggregatedStatsByUID(uid primitive.ObjectID) (*schemes.User, *schemes.UserStats, error) {
+	user, err := dh.GetUserById(uid)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	stats, err := dh.GetStatsByUID(uid)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return user, stats, nil
+}
